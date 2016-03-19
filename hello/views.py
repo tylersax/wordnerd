@@ -28,6 +28,8 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
+    
+
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
