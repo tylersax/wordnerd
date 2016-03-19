@@ -1,7 +1,10 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer
+from django.shortcuts import render
+from django.http import HttpResponse
 
+from .models import Greeting
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -18,13 +21,6 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
-'''
-from django.shortcuts import render
-from django.http import HttpResponse
-
-from .models import Greeting
-
-# Create your views here.
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
@@ -38,4 +34,3 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, 'db.html', {'greetings': greetings})
-'''
