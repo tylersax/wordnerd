@@ -25,7 +25,7 @@ class NoteViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows notes to be viewed or edited.
     """
-    queryset = Notes.objects.all()
+    queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
 def index(request):
