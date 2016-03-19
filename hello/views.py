@@ -21,6 +21,13 @@ class GroupViewSet(viewsets.ModelViewSet):
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
 
+class NoteViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows notes to be viewed or edited.
+    """
+    queryset = Notes.objects.all()
+    serializer_class = NoteSerializer
+
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
