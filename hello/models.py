@@ -10,4 +10,6 @@ class Note(models.Model):
         #TODO add 'creator' field
         self.content = content
         self.created = created or datetime.now()
-        
+
+    def create(self, validated_data):
+        return Note.objects.create(**validated_data)
