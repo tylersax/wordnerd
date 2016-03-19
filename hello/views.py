@@ -4,7 +4,7 @@ from .serializers import UserSerializer, GroupSerializer
 from django.shortcuts import render
 from django.http import HttpResponse
 
-from .models import Greeting
+from .models import Greeting, Note
 
 class UserViewSet(viewsets.ModelViewSet):
     """
