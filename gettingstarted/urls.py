@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^db', views.db, name='db'),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^test/$', views.returnString, name='return_string'),
 ]
 
 

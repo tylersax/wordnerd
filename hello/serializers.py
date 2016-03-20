@@ -19,4 +19,4 @@ class NoteSerializer(serializers.HyperlinkedModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        return Note(**validated_data)
+        return Note.objects.create(**validated_data)

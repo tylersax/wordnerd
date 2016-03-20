@@ -2,7 +2,11 @@ from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
 from .serializers import UserSerializer, GroupSerializer, NoteSerializer
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+from rest_framework import status
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
 
 from .models import Greeting, Note
 
@@ -28,7 +32,14 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
-    
+@api_view(['GET'])
+def returnString(request):
+    # if request.method == 'GET':
+    #     notes = Note.objects.all()
+    #     serializer = NoteSerializer(notes, context=request, many=True)
+    #     return Response(serializer.data)
+
+    return JsonResponse({'foo':str(request.GET.lists())})
 
 def index(request):
     # return HttpResponse('Hello from Python!')
