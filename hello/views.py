@@ -4,8 +4,9 @@ from .serializers import UserSerializer, GroupSerializer, NoteSerializer
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
 
 
 from .models import Greeting, Note
@@ -40,6 +41,15 @@ def returnString(request):
     #     return Response(serializer.data)
 
     return JsonResponse({'foo':str(request.GET.lists())})
+
+@api_view(['GET','POST'])
+@permission_classes((AllowAny,))
+def webhook(request):
+    myVerifyToken = '897698241086'
+    if request.method =='GET' and str(request.GET.get('hub.verify_token')) == myVerifyToken:
+        return HttpResponse(str(request.GET.get('hub.challenge')),status=200)
+    else:
+        return HttpResponse(status=500)
 
 def index(request):
     # return HttpResponse('Hello from Python!')
