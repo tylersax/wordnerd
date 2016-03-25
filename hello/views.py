@@ -58,7 +58,7 @@ def webhook(request):
     if request.method =='GET' and str(request.GET.get('hub.verify_token')) == myVerifyToken:
         return HttpResponse(str(request.GET.get('hub.challenge')),status=200)
     elif request.method =='POST':
-        print str(request.POST)
+        logging.debug(request.POST.urlencode())
         serializer = FbPostSerializer(data=request.POST)
         serializer.is_valid()
         serializer.save()
