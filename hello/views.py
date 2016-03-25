@@ -8,6 +8,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
+import logging
 
 from .models import Greeting, Note, FbPost
 
@@ -57,6 +58,7 @@ def webhook(request):
     if request.method =='GET' and str(request.GET.get('hub.verify_token')) == myVerifyToken:
         return HttpResponse(str(request.GET.get('hub.challenge')),status=200)
     elif request.method =='POST':
+        logging.debug('hello world')
         post = FbPost(request.POST)
         post.save()
     else:
