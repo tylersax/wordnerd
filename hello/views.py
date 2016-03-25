@@ -59,6 +59,7 @@ def webhook(request):
         return HttpResponse(str(request.GET.get('hub.challenge')),status=200)
     elif request.method =='POST':
         logging.debug(request.POST.urlencode())
+        print(request.POST.urlencode())
         # serializer = FbPostSerializer(data=request.POST)
         # serializer.is_valid()
         # serializer.save()
