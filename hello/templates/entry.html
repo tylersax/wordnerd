@@ -20,16 +20,23 @@
            fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
 
-        FB.login(function(response) {
-          // handle the response
-        }, {scope: 'email,user_likes,pages_messaging'});
+        function testAPI() {
+          console.log('Welcome!  Fetching your information.... ');
+          FB.login(function(response) {
+            // handle the response
+          }, {scope: 'email,user_likes,pages_messaging'});
+        }
+
       </script>
-      
+
       <div class="fb-messengermessageus"
         messenger_app_id="185272738200022"
         page_id="219247181443199"
         color="blue"
         size="large" ></div>
+
+        <fb:login-button scope="pages_messaging" onlogin="testAPI();">
+</fb:login-button>
 
 
 </body>
