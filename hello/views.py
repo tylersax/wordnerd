@@ -60,7 +60,7 @@ def webhook(request):
     elif request.method =='POST':
         print str(request.POST)
         serializer = FbPostSerializer(data=request.POST)
-        serializer.is_valid(raise_exception=True)
+        serializer.is_valid()
         serializer.save()
         return HttpResponse(str(request.POST),status=200)
     else:
