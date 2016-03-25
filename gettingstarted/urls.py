@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^test/$', views.returnString, name='return_string'),
     url(r'^webhook/$', views.webhook, name='webhook'),
+    url(r'^entry', views.entry, name='entry'),
 ]
 
 

@@ -85,3 +85,6 @@ def db(request):
     greetings = Greeting.objects.all()
 
     return render(request, 'db.html', {'greetings': greetings})
+
+def entry(request):
+    return render(request, 'entry.html')
