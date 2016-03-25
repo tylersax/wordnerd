@@ -9,6 +9,8 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
+from django.utils.six import BytesIO
+from rest_framework.parsers import JSONParser
 
 from .models import Greeting, Note, FbPost
 
@@ -61,10 +63,12 @@ def webhook(request):
     elif request.method =='POST':
         logging.debug(request.body)
         print(request.body)
-        # serializer = FbPostSerializer(data=request.POST)
-        # serializer.is_valid()
-        # serializer.save()
-        return HttpResponse(str(request.body),status=200)
+        stream = BytesIO(str(request.body))
+        data = JSONParser().parse(stream)
+        serializer = FbPostSerializer(data=data)
+        serializer.is_valid()
+        serializer.save()
+        return HttpResponse(str(serializer.errors),status=200)
     else:
         return HttpResponse(status=500)
 
