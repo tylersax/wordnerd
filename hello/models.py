@@ -18,7 +18,7 @@ class Note(models.Model):
         return Note.objects.create(**validated_data)
 
 class FbPost(models.Model):
-    postobject=models.CharField(max_length=100)
+    object=models.CharField(max_length=100)
     entry=models.TextField()
 
     def create(self, validated_data):
