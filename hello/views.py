@@ -1,15 +1,15 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, NoteSerializer
+from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from django.utils.six import BytesIO
 
-
-from .models import Greeting, Note
+from .models import Greeting, Note, FbPost
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -33,6 +33,14 @@ class NoteViewSet(viewsets.ModelViewSet):
     queryset = Note.objects.all()
     serializer_class = NoteSerializer
 
+class FbPostViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows notes to be viewed or edited.
+    """
+    queryset = FbPost.objects.all()
+    serializer_class = FbPostSerializer
+
+
 @api_view(['GET'])
 def returnString(request):
     # if request.method == 'GET':
@@ -48,6 +56,9 @@ def webhook(request):
     myVerifyToken = '897698241086'
     if request.method =='GET' and str(request.GET.get('hub.verify_token')) == myVerifyToken:
         return HttpResponse(str(request.GET.get('hub.challenge')),status=200)
+    elif request.method =='POST':
+        post = FbPost(request.POST)
+        post.save()
     else:
         return HttpResponse(status=500)
 
