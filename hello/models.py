@@ -2,6 +2,10 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User, Group
 import logging
+import wit
+wit_at = 'EJI7TK2JFPGOJAXNT7I3M5HWAS52ENEM'
+
+import json
 
 # Create your models here.
 class Greeting(models.Model):
@@ -46,20 +50,22 @@ class Topic(models.Model):
 
     def setTopic(self):
         message = self.message
-        if message ==  'helloworld':
-            self.name='helloworld'
-        elif message == 'tutorial':
-            self.name='tutorial'
-        else:
-            self.name='unknown'
+        wit.init()
+        wit_response = wit.text_query(message, wit_at)
+        intent = json.loads(wit_response)['outcomes'][0]['intent']
+        self.name = intent
 
     def respond(self):
         if self.name == 'helloworld':
             return 'Hello world!'
         elif self.name == 'tutorial':
             return 'Welcome! Let\'s get to know one another.'
+        elif self.name =='check_time':
+            return 'Sorry, I don\'t know what time it is'
+        elif self.name=='math':
+            return 'Math response'
         else:
-            return 'Sorry, I don\'t understand.'
+            return 'Sorry, I don\'t understand ' + self.name
 
 class Conversation(models.Model):
     start=models.DateTimeField()
