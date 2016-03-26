@@ -9,10 +9,9 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
-from django.utils.six import BytesIO
 from rest_framework.parsers import JSONParser
 
-from .models import Greeting, Note, FbPost
+from .models import Greeting, Note, FbPost, Conversation
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -68,7 +67,14 @@ def webhook(request):
         serializer = FbPostSerializer(data=data)
         serializer.is_valid()
         serializer.save()
-        return HttpResponse(str(serializer.errors),status=200)
+
+        user=data['entry'][0]['messaging'][0]['sender']['id']
+        message_text=data['entry'][0]['messaging'][0]['message']['text']
+
+        convo = Conversation.create(message_text, user )
+        response = convo.parseMessage(message_text)
+
+        return HttpResponse(response,status=200)
     else:
         return HttpResponse(status=500)
 
