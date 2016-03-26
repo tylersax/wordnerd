@@ -29,7 +29,7 @@ class FbPost(models.Model):
 class Topic(models.Model):
     # maybe this should actually be an interface, and any new
     # functionality inherits it;s structure
-    name=models.CharField()
+    name=models.CharField(max_length=200)
 
     # the text string used to trigger the topic
     message=models.TextField()
@@ -65,7 +65,7 @@ class Conversation(models.Model):
     start=models.DateTimeField()
     updated=models.DateTimeField()
     user=models.BigIntegerField()
-    state=models.CharField()
+    state=models.CharField(max_length=200)
     topic=models.OneToOneField(Topic)
 
     @classmethod
