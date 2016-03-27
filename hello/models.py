@@ -50,10 +50,11 @@ class Topic(models.Model):
 
     def setTopic(self):
         message = self.message
-        wit.init()
-        wit_response = wit.text_query(message, wit_at)
-        intent = json.loads(wit_response)['outcomes'][0]['intent']
-        self.name = intent
+        #wit.init()
+        #wit_response = wit.text_query(message, wit_at)
+        #intent = json.loads(wit_response)['outcomes'][0]['intent']
+        #self.name = intent
+        self.name = message 
 
     def respond(self):
         if self.name == 'helloworld':
