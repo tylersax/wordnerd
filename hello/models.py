@@ -2,7 +2,7 @@ from django.db import models
 from datetime import datetime
 from django.contrib.auth.models import User, Group
 import logging
-#import wit
+import urllib
 import pycurl
 from io import BytesIO
 wit_at = 'EJI7TK2JFPGOJAXNT7I3M5HWAS52ENEM'
@@ -52,19 +52,18 @@ class Topic(models.Model):
 
     def setTopic(self):
         message = self.message
-        #wit.init()
-        #wit_response = wit.text_query(message, wit_at)
-        #intent = json.loads(wit_response)['outcomes'][0]['intent']
-        #self.name = intent
         buffer = BytesIO()
         c = pycurl.Curl()
-        c.setopt(c.URL, 'https://api.wit.ai/message?v=20141022&q=hello')
+        c.setopt(
+            c.URL,
+            'https://api.wit.ai/message?v=20141022&q=' + urllib.pathname2url(message)
+        )
         c.setopt(c.WRITEFUNCTION, buffer.write)
         c.setopt(c.HTTPHEADER, ['Authorization: Bearer ' + wit_at])
         c.perform()
         c.close()
         intent = json.loads(buffer.getvalue())['outcomes'][0]['intent']
-        self.name = intent 
+        self.name = intent
 
     def respond(self):
         if self.name == 'helloworld':
