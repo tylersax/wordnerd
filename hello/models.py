@@ -47,25 +47,25 @@ class Topic(models.Model):
     @classmethod
     def create(cls, first_message):
         topic = cls(message=first_message)
-        topic.setTopic()
+        #topic.setTopic()
         return topic
 
 
     # havingn trouble with pycurl so commenting out for now
-    #def setTopic(self):
-        # message = self.message
-        # buffer = BytesIO()
-        # c = pycurl.Curl()
-        # c.setopt(
-        #     c.URL,
-        #     'https://api.wit.ai/message?v=20141022&q=' + urllib.pathname2url(message)
-        # )
-        # c.setopt(c.WRITEFUNCTION, buffer.write)
-        # c.setopt(c.HTTPHEADER, ['Authorization: Bearer ' + wit_at])
-        # c.perform()
-        # c.close()
-        # intent = json.loads(buffer.getvalue())['outcomes'][0]['intent']
-        # self.name = intent
+    # def setTopic(self):
+    #     message = self.message
+    #     buffer = BytesIO()
+    #     c = pycurl.Curl()
+    #     c.setopt(
+    #         c.URL,
+    #         'https://api.wit.ai/message?v=20141022&q=' + urllib.pathname2url(message)
+    #     )
+    #     c.setopt(c.WRITEFUNCTION, buffer.write)
+    #     c.setopt(c.HTTPHEADER, ['Authorization: Bearer ' + wit_at])
+    #     c.perform()
+    #     c.close()
+    #     intent = json.loads(buffer.getvalue())['outcomes'][0]['intent']
+    #     self.name = intent
 
     def respond(self):
         if self.name == 'helloworld':
