@@ -66,7 +66,7 @@ def webhook(request):
         data = JSONParser().parse(stream)
         serializer = FbPostSerializer(data=data)
         serializer.is_valid()
-        serializer.save()
+        #serializer.save()
 
         user=data['entry'][0]['messaging'][0]['sender']['id']
         message_text=data['entry'][0]['messaging'][0]['message']['text']
@@ -81,7 +81,6 @@ def webhook(request):
 def index(request):
     # return HttpResponse('Hello from Python!')
     return render(request, 'index.html')
-
 
 def db(request):
 
