@@ -16,6 +16,11 @@ wotd_feed = 'http://www.dictionary.com/wordoftheday/wotd.rss'
 rss = feedparser.parse(wotd_feed)
 wotd_string = rss.entries[0]['summary'].split(':', 1)[0]
 
-#wotd = WOTD(word=wotd_string)
-print wotd_string
-utils.send_message(1046310852095543, 'The word of the day is \'{wotd}.\''.format(wotd=wotd_string))
+existing_wotd = WOTD.objects.filter(word=wotd_string)
+if len(existing_wotd) > 0:
+    wotd = existing_wotd[0]
+else:
+    wotd = WOTD(word=wotd_string)
+    wotd.save()
+
+utils.send_message(1046310852095543, 'The word of the day is \'{wotd}.\''.format(wotd=wotd.word))

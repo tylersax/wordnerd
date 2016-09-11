@@ -5,6 +5,4 @@ def send_message(user, message):
     url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + access_token
     payload = {'recipient':{'id':user},'message':{'text':message}}
     r = requests.post(url, json=payload)
-    print r.json()
-    print r.url
     return r.json()
