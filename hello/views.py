@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer
+from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer, WOTDSerializer
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
@@ -11,7 +11,14 @@ from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
 
-from .models import Greeting, Note, FbPost, Conversation
+from .models import Greeting, Note, FbPost, Conversation, WOTD
+
+class WOTDViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows WOTD to be viewed or edited.
+    """
+    queryset = WOTD.objects.all()
+    serializer_class = WOTDSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
     """

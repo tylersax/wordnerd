@@ -8,6 +8,7 @@ from io import BytesIO
 wit_at = 'EJI7TK2JFPGOJAXNT7I3M5HWAS52ENEM'
 
 import json
+from datetime import datetime
 
 # Create your models here.
 class Greeting(models.Model):
@@ -100,3 +101,11 @@ class Conversation(models.Model):
         # send message to this.topic, respond with response, default if no
         # response
         return self.respond()
+
+class WOTD(models.Model):
+    word=models.CharField(max_length=100)
+    day=models.DateField(default=datetime.now())
+    definition=models.TextField()
+
+    def create(self, validated_data):
+        return WOTD.objects.create(**validated_data)

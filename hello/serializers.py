@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Note, FbPost
+from .models import Note, FbPost, WOTD     
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -28,3 +28,11 @@ class FbPostSerializer(serializers.HyperlinkedModelSerializer):
 
     def create(self, validated_data):
         return FbPost.objects.create(**validated_data)
+
+class WOTDSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = WOTD
+        fields = '__all__'
+
+    def create(self, validated_data):
+        return WOTD.objects.create(**validated_data)
