@@ -74,7 +74,7 @@ def webhook(request):
         # serializer = FbPostSerializer(data=data)
         # serializer.is_valid()
         # serializer.save()
-        #
+
         user=data['entry'][0]['messaging'][0]['sender']['id']
         # message_text=data['entry'][0]['messaging'][0]['message']['text']
         #
