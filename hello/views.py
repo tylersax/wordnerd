@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
-
+import utils 
 from .models import Greeting, Note, FbPost, Conversation, WOTD
 
 class WOTDViewSet(viewsets.ModelViewSet):
