@@ -69,19 +69,19 @@ def webhook(request):
     elif request.method =='POST':
         logging.debug(request.body)
         print(request.body)
-        # stream = BytesIO(str(request.body))
-        # data = JSONParser().parse(stream)
+        stream = BytesIO(str(request.body))
+        data = JSONParser().parse(stream)
         # serializer = FbPostSerializer(data=data)
         # serializer.is_valid()
         # serializer.save()
         #
-        # user=data['entry'][0]['messaging'][0]['sender']['id']
+        user=data['entry'][0]['messaging'][0]['sender']['id']
         # message_text=data['entry'][0]['messaging'][0]['message']['text']
         #
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
-
-        return HttpResponse('all quiet on the western front',status=200)
+        utils.send_message(user, '')
+        return HttpResponse(status=200)
     else:
         return HttpResponse(status=500)
 
