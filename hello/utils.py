@@ -9,8 +9,8 @@ def send_message(user, message):
     return r.json()
 
 def get_definition(word):
-    key = '988bd8a9-46f8-44b0-ba96-3ab3d55f159e'
-    url = 'http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{word}?key={key}'.format(word=word, key=key)
+    key = 'be629e6642b73b9c3b4710360ec0a0d680d43628b4ba9e162'
+    url = 'http://developer.wordnik.com/word.json/{word}/definitions'.format(word=word, key=key)
     xml = feedparser.parse(url)
 
 def get_definition_deprecated(word):
