@@ -1,5 +1,6 @@
 import requests
 import feedparser
+from wordnik import *
 
 def send_message(user, message):
     access_token = 'EAACogSuZCOdYBAMQELrH7CpTvbKqx6ckRvJ6VeyiZA3bqCWCvaZAJ8H3wwWeVKTBSbhvkcnzAWZCZCpvpXSljqyzQrSKUJNuVjRsT4WtYMXZCFMyLSLUzNYJE6btdHxZAZB50w9YN81CjJKkwQEIbgTb6VUVNFoMuZCbaNRJaUQjrMmUPMrIZAwxUR'
@@ -10,8 +11,11 @@ def send_message(user, message):
 
 def get_definition(word):
     key = 'be629e6642b73b9c3b4710360ec0a0d680d43628b4ba9e162'
-    url = 'http://developer.wordnik.com/word.json/{word}/definitions'.format(word=word, key=key)
-    xml = feedparser.parse(url)
+    url = 'http://api.wordnik.com/v4'
+    client = swagger.ApiClient(key, url)
+    wordApi = WordApi.WordApi(client)
+    definitions = wordApi.getDefinitions(word)
+    return definitions[0].text
 
 def get_definition_deprecated(word):
     mashape_key = 'iTTnvuGbZymshZqKjqM5mA4XmlLMp13gdUHjsnm0tGZL8JUziQ'
