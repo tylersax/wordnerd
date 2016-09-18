@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer, WOTDSerializer
+from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer, WOTDSerializer, FBUserSerializer
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
@@ -10,8 +10,13 @@ from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
-import utils 
-from .models import Greeting, Note, FbPost, Conversation, WOTD
+import utils
+from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser
+
+class FBUserViewSet(viewsets.ModelViewSet):
+
+    queryset = FBUser.objects.all()
+    serializer_class = FBUserSerializer
 
 class WOTDViewSet(viewsets.ModelViewSet):
     """

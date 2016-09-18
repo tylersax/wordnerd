@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 import logging
 import urllib
 # import pycurl
-import utils 
+import utils
 from io import BytesIO
 wit_at = 'EJI7TK2JFPGOJAXNT7I3M5HWAS52ENEM'
 
@@ -110,3 +110,11 @@ class WOTD(models.Model):
 
     def create(self, validated_data):
         return WOTD.objects.create(**validated_data)
+
+class FBUser(models.Model):
+    psid=models.CharField(max_length=200)
+    first_name=models.CharField(max_length=200)
+    last_name=models.CharField(max_length=200)
+
+    def create(self, validated_data):
+        return FBUser.objects.create(**validated_data)
