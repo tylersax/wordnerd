@@ -27,10 +27,8 @@ else:
     )
     wotd.save()
 
-print wotd.word
-
 users = FBUser.objects.all()
 for user in users:
-    print user.psid
-    utils.send_message(user.psid, 'The word of the day is \"{wotd}.\"'.format(wotd=wotd.word))
-    utils.send_message(user.psid, 'It means, \"{definition}\"'.format(definition=wotd.definition))
+    message = 'The word of the day is \"{wotd}.\"'.format(wotd=wotd.word)
+    replies = {'Nice! What does it mean?':'define.{wotd}'.format(wotd=wotd.word)}
+    utils.send_message_with_replies(user.psid, message, replies)
