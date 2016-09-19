@@ -30,5 +30,5 @@ else:
 users = FBUser.objects.all()
 for user in users:
     message = 'The word of the day is \"{wotd}.\"'.format(wotd=wotd.word)
-    replies = {'Nice! What does it mean?':'define.{wotd}'.format(wotd=wotd.word)}
+    replies = {'Definition, please?':'define.{wotd}'.format(wotd=wotd.word)}
     utils.send_message_with_replies(user.psid, message, replies)
