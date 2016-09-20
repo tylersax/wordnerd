@@ -81,11 +81,11 @@ def webhook(request):
         # serializer.save()
 
         user=data['entry'][0]['messaging'][0]['sender']['id']
-        # message_text=data['entry'][0]['messaging'][0]['message']['text']
+        message_text=data['entry'][0]['messaging'][0]['message']['text']
         #
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
-        utils.send_message(user, '')
+        utils.send_message(user, message_text)
         return HttpResponse(status=200)
     else:
         return HttpResponse(status=500)
