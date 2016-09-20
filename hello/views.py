@@ -98,7 +98,7 @@ def webhook(request):
             if payload_function == 'define':
                 #this should be in a function
                 existing_wotd = WOTD.objects.filter(word=payload_param)
-                message = '\"{definition}\"'.format(definition=existing_wotd.definition)
+                message = '\"{definition}\"'.format(definition=existing_wotd[0].definition)
                 replies = {':thumbs_up_sign:':'null',':thumbs_down_sign:':'null'}
                 utils.send_message_with_replies(psid, message, replies)
 
