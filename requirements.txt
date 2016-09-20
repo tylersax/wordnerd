@@ -6,4 +6,5 @@ whitenoise==2.0.6
 djangorestframework==3.3.1
 requests
 feedparser
-wordnik 
+wordnik
+emoji

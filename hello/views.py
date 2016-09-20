@@ -80,9 +80,32 @@ def webhook(request):
         # serializer.is_valid()
         # serializer.save()
 
-        user=data['entry'][0]['messaging'][0]['sender']['id']
+        psid=data['entry'][0]['messaging'][0]['sender']['id']
         message_text=data['entry'][0]['messaging'][0]['message']['text']
-        #
+
+        if "quick_reply" in data['entry'][0]['messaging'][0]['message']:
+            payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
+        else:
+            payload = ''
+
+        if payload:
+            payload_function = payload.split('.')[0]
+            payload_param = payload.split('.')[1]
+
+            if payload_function == 'define':
+                #this should be in a function
+                existing_wotd = WOTD.objects.filter(word=payload_param)
+                message = '\"{definition}\"'.format(definition=existing_wotd.definition)
+                replies = {':thumbs_up_sign:':'null',':thumbs_down_sign:':'null'}
+                utils.send_message_with_replies(psid, message, replies)
+
+
+        # start by defining the response functionality here and in utils,
+        # but this should really be pushed into a 'conversation' object
+
+        switch payload:
+
+
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
         utils.send_message(user, message_text)

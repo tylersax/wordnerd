@@ -2,11 +2,13 @@ import requests
 import feedparser
 from wordnik import *
 import json
+import emoji
 
 def send_message(user, message):
     access_token = 'EAACogSuZCOdYBAMQELrH7CpTvbKqx6ckRvJ6VeyiZA3bqCWCvaZAJ8H3wwWeVKTBSbhvkcnzAWZCZCpvpXSljqyzQrSKUJNuVjRsT4WtYMXZCFMyLSLUzNYJE6btdHxZAZB50w9YN81CjJKkwQEIbgTb6VUVNFoMuZCbaNRJaUQjrMmUPMrIZAwxUR'
     url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + access_token
-    payload = {'recipient':{'id':user},'message':{'text':message}}
+    message_text = emoji.emojize(message)
+    payload = {'recipient':{'id':user},'message':{'text':message_text}}
     r = requests.post(url, json=payload)
     print r.json()
     return r.json()
@@ -15,7 +17,8 @@ def send_message_with_replies(user, message, replies):
     access_token = 'EAACogSuZCOdYBAMQELrH7CpTvbKqx6ckRvJ6VeyiZA3bqCWCvaZAJ8H3wwWeVKTBSbhvkcnzAWZCZCpvpXSljqyzQrSKUJNuVjRsT4WtYMXZCFMyLSLUzNYJE6btdHxZAZB50w9YN81CjJKkwQEIbgTb6VUVNFoMuZCbaNRJaUQjrMmUPMrIZAwxUR'
     url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + access_token
     replies_json = make_replies_json(replies)
-    payload = {'recipient':{'id':user},'message':{'text':message,'quick_replies':replies_json}}
+    message_text = emoji.emojize(message)
+    payload = {'recipient':{'id':user},'message':{'text':message_text,'quick_replies':replies_json}}
     r = requests.post(url, json=payload)
     print r.json()
     return r.json()
@@ -23,7 +26,8 @@ def send_message_with_replies(user, message, replies):
 def make_replies_json(replies):
     replies_json = []
     for reply, payload in replies.items():
-        reply_json = {"content_type":"text","title":reply,"payload":payload}
+        reply_text = emoji.emojize(reply)
+        reply_json = {"content_type":"text","title":reply_text,"payload":payload}
         replies_json.append(reply_json)
 
     return json.dumps(replies_json)
