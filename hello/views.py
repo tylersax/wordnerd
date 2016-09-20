@@ -91,7 +91,7 @@ def webhook(request):
         else:
             payload = ''
 
-        if payload:
+        if payload and payload != 'null':
             payload_function = payload.split('.')[0]
             payload_param = payload.split('.')[1]
 
