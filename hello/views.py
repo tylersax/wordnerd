@@ -104,8 +104,11 @@ def webhook(request):
                 utils.send_message_with_replies(psid, message, replies)
 
             if payload_function == 'get_started':
+                profile = utils.get_name_from_psid(psid)
                 new_user = FBUser(
-                    psid=psid
+                    psid=psid,
+                    first_name=profile.get('first_name'),
+                    last_name=profile.get('last_name')
                 )
                 new_user.save()
 
