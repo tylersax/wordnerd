@@ -88,7 +88,7 @@ def webhook(request):
 
         if "quick_reply" in data['entry'][0]['messaging'][0]['message']:
             payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
-        else if "postback" in data['entry'][0]['messaging'][0]:
+        elif "postback" in data['entry'][0]['messaging'][0]:
             payload = data['entry'][0]['messaging'][0]['postback']['payload']
             psid = data['entry'][0]['messaging'][0]['sender']['id']
         else:
