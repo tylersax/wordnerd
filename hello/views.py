@@ -85,10 +85,10 @@ def webhook(request):
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
 
-        if "quick_reply" in data['entry'][0]['messaging'][0]['message']:
-            payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
-        elif "postback" in data['entry'][0]['messaging'][0]:
+        if "postback" in data['entry'][0]['messaging'][0]:
             payload = data['entry'][0]['messaging'][0]['postback']['payload']
+        elif "quick_reply" in data['entry'][0]['messaging'][0]['message']:
+            payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
         else:
             payload = ''
 
