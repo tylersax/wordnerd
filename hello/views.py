@@ -81,7 +81,6 @@ def webhook(request):
         # serializer.save()
 
         psid=data['entry'][0]['messaging'][0]['sender']['id']
-        message_text=data['entry'][0]['messaging'][0]['message']['text']
 
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
@@ -90,7 +89,6 @@ def webhook(request):
             payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
         elif "postback" in data['entry'][0]['messaging'][0]:
             payload = data['entry'][0]['messaging'][0]['postback']['payload']
-            psid = data['entry'][0]['messaging'][0]['sender']['id']
         else:
             payload = ''
 
