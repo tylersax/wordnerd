@@ -88,6 +88,9 @@ def webhook(request):
 
         if "quick_reply" in data['entry'][0]['messaging'][0]['message']:
             payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
+        else if "postback" in data['entry'][0]['messaging'][0]:
+            payload = data['entry'][0]['messaging'][0]['postback']['payload']
+            psid = data['entry'][0]['messaging'][0]['sender']['id']
         else:
             payload = ''
 
@@ -101,6 +104,12 @@ def webhook(request):
                 message = '\"{definition}\"'.format(definition=existing_wotd[0].definition)
                 replies = {':thumbs_up_sign:':'0.0',':thumbs_down_sign:':'0.0'}
                 utils.send_message_with_replies(psid, message, replies)
+
+            if payload_function == 'get_started':
+                new_user = FBUser(
+                    psid=psid
+                )
+                new_user.save()
 
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
