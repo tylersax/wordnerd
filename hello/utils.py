@@ -50,7 +50,9 @@ def get_definition(word):
     client = swagger.ApiClient(key, url)
     wordApi = WordApi.WordApi(client)
     definitions = wordApi.getDefinitions(word)
-    return definitions[0].text
+    definition = definitions[0].text
+    definition = definition.replace("”", "\"")
+    return definition
 
 def get_definition_deprecated(word):
     mashape_key = 'iTTnvuGbZymshZqKjqM5mA4XmlLMp13gdUHjsnm0tGZL8JUziQ'
