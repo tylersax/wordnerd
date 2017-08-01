@@ -113,14 +113,12 @@ def webhook(request):
                 new_user.save()
 
                 greeting = """
-                Hey there, {first_name}. Let\'s learn some words,
-                shall we? If it\'s alright with you, I\'ll message you every morning
-                with a new word of the day.
+                Hey there, {first_name}. Let\'s learn some words, shall we? If it\'s alright with you, I\'ll message you every morning with a new word of the day.
                 """.format(first_name=new_user.first_name)
 
                 replies = {
-                    ':thumbs_up_sign: Let\'s do it!':'yes',
-                    ':thumbs_down_sign: No thanks, I\'d rather ramain ignorant.':'no'
+                    ':thumbs_up_sign: Let\'s do it!':'subscribe.yes',
+                    ':thumbs_down_sign: No thanks.':'subscribe.no'
                     }
 
                 utils.send_message_with_replies(psid, greeting, replies)
