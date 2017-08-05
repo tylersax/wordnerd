@@ -51,7 +51,6 @@ def get_definition(word):
     wordApi = WordApi.WordApi(client)
     definitions = wordApi.getDefinitions(word)
     definition = definitions[0].text
-    definition = definition.replace("”", "\"")
     return definition
 
 def get_definition_deprecated(word):
