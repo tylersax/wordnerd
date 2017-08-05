@@ -14,7 +14,7 @@ from hello.models import WOTD, FBUser
 
 wotd_feed = 'http://www.dictionary.com/wordoftheday/wotd.rss'
 rss = feedparser.parse(wotd_feed)
-wotd_string = rss.entries[0]['item']['description'].split(':', 1)[0]
+wotd_string = rss.entries[0]['summary'].split(':', 1)[0]
 
 existing_wotd = WOTD.objects.filter(word=wotd_string)
 if len(existing_wotd) > 1:
