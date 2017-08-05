@@ -100,17 +100,19 @@ def webhook(request):
                 #this should be in a function
                 existing_wotd = WOTD.objects.filter(word=payload_param)
                 message = '\"{definition}\"'.format(definition=existing_wotd[0].definition)
-                replies = {':thumbs_up_sign:':'yes',':thumbs_down_sign:':'no'}
+                replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
                 utils.send_message_with_replies(psid, message, replies)
 
             if payload_function == 'get_started':
                 profile = utils.get_name_from_psid(psid)
-                new_user = FBUser(
-                    psid=psid,
-                    first_name=profile.get('first_name'),
-                    last_name=profile.get('last_name')
-                )
-                new_user.save()
+                existing_user = FBUser.objects.filter(psid=psid)
+                if existing_user.count()==0:
+                    new_user = FBUser(
+                        psid=psid,
+                        first_name=profile.get('first_name'),
+                        last_name=profile.get('last_name')
+                    )
+                    new_user.save()
 
                 greeting = """
                 Hey there, {first_name}. Let\'s learn some words, shall we? If it\'s alright with you, I\'ll message you every morning with a new word of the day.
