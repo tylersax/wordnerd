@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
-from .models import Note, FbPost, WOTD, FBUser, LoggedMessage 
+from .models import Note, FbPost, WOTD, FBUser, LoggedMessage
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
@@ -46,6 +46,9 @@ class FBUserSerializer(serializers.HyperlinkedModelSerializer):
         return FBUser.objects.create(**validated_data)
 
 class LoggedMessageSerializer(serializers.HyperlinkedModelSerializer):
+    recipient = serializers.HyperlinkedIdentityField(view_name='rest_framework:LoggedMessage-detail', format='html')
+    sender = serializers.HyperlinkedIdentityField(view_name='rest_framework:LoggedMessage-detail', format='html')
+    
     class Meta:
         model = LoggedMessage
         fields = '__all__'
