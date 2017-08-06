@@ -142,7 +142,7 @@ class LoggedMessage(models.Model):
     api_id=models.BigIntegerField()
     payload=models.CharField(max_length=50, blank=True)
     text=models.TextField(blank=True)
-    attachment_urls=models.ArrayField(
+    attachment_urls=ArrayField(
         models.URLField(),
         size=8,
         blank=True
