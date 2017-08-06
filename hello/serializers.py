@@ -46,8 +46,8 @@ class FBUserSerializer(serializers.HyperlinkedModelSerializer):
         return FBUser.objects.create(**validated_data)
 
 class LoggedMessageSerializer(serializers.HyperlinkedModelSerializer):
-    recipient = serializers.HyperlinkedIdentityField(view_name='rest_framework:LoggedMessage-detail', format='html')
-    sender = serializers.HyperlinkedIdentityField(view_name='rest_framework:LoggedMessage-detail', format='html')
+    recipient = serializers.HyperlinkedIdentityField(view_name='FBUser-detail', format='html')
+    sender = serializers.HyperlinkedIdentityField(view_name='FBUser-detail', format='html')
     
     class Meta:
         model = LoggedMessage
