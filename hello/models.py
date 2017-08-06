@@ -138,7 +138,6 @@ class LoggedMessage(models.Model):
         choices=LOGGED_MESSAGE_TYPES,
         default='null'
     )
-    api_id=models.BigIntegerField()
     payload=models.CharField(max_length=50, blank=True)
     text=models.TextField(blank=True)
     attachment_url=models.URLField(blank=True)
