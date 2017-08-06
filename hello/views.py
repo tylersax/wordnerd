@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
-import hello.utils 
+import utils 
 from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser, LoggedMessage
 
 class FBUserViewSet(viewsets.ModelViewSet):
