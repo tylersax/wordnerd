@@ -118,3 +118,35 @@ class FBUser(models.Model):
 
     def create(self, validated_data):
         return FBUser.objects.create(**validated_data)
+
+class LoggedMessage(models.Model):
+    LOGGED_MESSAGE_TYPES = (
+            ('sent', 'sent'),
+            ('recieved', 'recieved'),
+            ('read', 'read'),
+            ('delivered', 'delivered'),
+            ('null', 'null')
+     )
+
+    mid=models.CharField(primary_key=True, max_length=100)
+    sender=models.ForeignKey(FBUser)
+    recipient=models.ForeignKey(FBUser)
+    timestamp_logged=models.DateTimeField(auto_now=False)
+    timestamp_sent=models.DateTimeField()
+    message_type=models.CharField(
+        max_length=20,
+        choices=LOGGED_MESSAGE_TYPES,
+        default='null'
+    )
+    api_id=models=BigIntegerField()
+    payload=models.CharField(max_length=50, blank=True)
+    text=models.TextField(blank=True)
+    attachment_urls=models.ArrayField(
+        models.URLField(),
+        size=8,
+        blank=True
+    )
+    extra=models.TextField(blank=True)
+
+    def create(self, validated_data):
+        return LoggedMessage.objects.create(**validated_data)
