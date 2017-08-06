@@ -51,7 +51,7 @@ class LoggedMessageSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = LoggedMessage
-        fields = ('mid','message_type')
+        fields = ('mid','message_type','timestamp_sent','payload','text','attachment_url')
 
     def create(self, validated_data):
         return LoggedMessage.objects.create(**validated_data)
