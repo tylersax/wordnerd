@@ -94,7 +94,7 @@ def webhook(request):
 
         if "postback" in data['entry'][0]['messaging'][0]:
             payload = data['entry'][0]['messaging'][0]['postback']['payload']
-        elif "read" in data['entry'][0]['messaging']:
+        elif "read" in data['entry'][0]['messaging'][0]:
             # this is just a read receipt, do nothing for now
             payload='null'
         elif "quick_reply" in data['entry'][0]['messaging'][0]['message']:
