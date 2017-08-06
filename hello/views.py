@@ -86,6 +86,8 @@ def webhook(request):
 
         log = LoggedMessage()
 
+        message = data['entry'][0]['messaging'][0].get('message')
+
         psid=data['entry'][0]['messaging'][0]['sender']['id']
         sender = FBUser.objects.filter(psid=psid)
         log.sender=sender[0]
@@ -93,15 +95,15 @@ def webhook(request):
         recipient = FBUser.objects.filter(psid=219247181443199)
         log.recipient=recipient[0]
 
-        log.mid=data['entry'][0]['messaging'][0]['message']['mid']
+        log.mid=message.get('mid')
         log.timestamp_sent=data['entry'][0]['messaging'][0]['timestamp']
 
-        if data['entry'][0]['messaging'][0]['message']['text']:
-            log.text=data['entry'][0]['messaging'][0]['message']['text']
+        if 'text' in message:
+            log.text=message.get('text')
 
-        if data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']:
-            log.attachment_url=data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']
-            
+        if 'attachments' in message:
+            log.attachment_url=message.get('attachments')[0]['payload']['url']
+
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
 
