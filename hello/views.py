@@ -10,7 +10,7 @@ from rest_framework.permissions import AllowAny
 from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
-import utils 
+import utils
 from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser, LoggedMessage
 
 class FBUserViewSet(viewsets.ModelViewSet):
@@ -83,24 +83,40 @@ def webhook(request):
         print(request.body)
         stream = BytesIO(str(request.body))
         data = JSONParser().parse(stream)
-        # serializer = FbPostSerializer(data=data)
-        # serializer.is_valid()
-        # serializer.save()
+
+        log = LoggedMessage()
 
         psid=data['entry'][0]['messaging'][0]['sender']['id']
+        sender = FBUser.objects.filter(psid=psid)
+        log.sender=sender
 
+        recipient = FBUser.objects.filter(psid=219247181443199)
+        log.recipient=recipient
+
+        log.mid=data['entry'][0]['messaging'][0]['message']['mid']
+        log.timestamp_sent=data['entry'][0]['messaging'][0]['timestamp']
+        log.text=data['entry'][0]['messaging'][0]['message']['text']
+        log.attachment_url=data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
 
         if "postback" in data['entry'][0]['messaging'][0]:
             payload = data['entry'][0]['messaging'][0]['postback']['payload']
+            log.message_type='received'
         elif "read" in data['entry'][0]['messaging'][0]:
             # this is just a read receipt, do nothing for now
+            log.message_type='read'
             payload='null'
         elif "quick_reply" in data['entry'][0]['messaging'][0]['message']:
             payload = data['entry'][0]['messaging'][0]['message']['quick_reply']['payload']
+            log.message_type='received'
         else:
             payload = ''
+            log.message_type='received'
+
+        log.payload=payload
+        log.save() 
+
 
         if payload and payload != 'null':
             payload_function = payload.split('.')[0]
