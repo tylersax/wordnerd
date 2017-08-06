@@ -5,7 +5,6 @@ from django.contrib.auth.models import User, Group
 import logging
 import urllib
 # import pycurl
-import utils
 from io import BytesIO
 wit_at = 'EJI7TK2JFPGOJAXNT7I3M5HWAS52ENEM'
 

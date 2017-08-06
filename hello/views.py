@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import viewsets
-from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer, WOTDSerializer, FBUserSerializer
+from .serializers import UserSerializer, GroupSerializer, NoteSerializer, FbPostSerializer, WOTDSerializer, FBUserSerializer, LoggedMessageSerializer
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from rest_framework import status
@@ -11,7 +11,7 @@ from django.utils.six import BytesIO
 import logging
 from rest_framework.parsers import JSONParser
 import utils
-from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser
+from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser, LoggedMessage
 
 class FBUserViewSet(viewsets.ModelViewSet):
 
@@ -53,6 +53,13 @@ class FbPostViewSet(viewsets.ModelViewSet):
     """
     queryset = FbPost.objects.all()
     serializer_class = FbPostSerializer
+
+class LoggedMessageViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows notes to be viewed or edited.
+    """
+    queryset = LoggedMessage.objects.all()
+    serializer_class = LoggedMessageSerializer
 
 
 @api_view(['GET'])
