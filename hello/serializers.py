@@ -46,12 +46,12 @@ class FBUserSerializer(serializers.HyperlinkedModelSerializer):
         return FBUser.objects.create(**validated_data)
 
 class LoggedMessageSerializer(serializers.HyperlinkedModelSerializer):
-    recipient = serializers.HyperlinkedIdentityField(view_name='rest_framework:fbuser-detail')
-    sender = serializers.HyperlinkedIdentityField(view_name='rest_framework:fbuser-detail')
+    #recipient = serializers.HyperlinkedIdentityField(view_name='rest_framework:fbuser-detail')
+    #sender = serializers.HyperlinkedIdentityField(view_name='rest_framework:fbuser-detail')
 
     class Meta:
         model = LoggedMessage
-        fields = '__all__'
+        fields = ('mid','message_type')
 
     def create(self, validated_data):
         return LoggedMessage.objects.create(**validated_data)
