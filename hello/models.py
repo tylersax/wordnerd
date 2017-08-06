@@ -141,11 +141,7 @@ class LoggedMessage(models.Model):
     api_id=models.BigIntegerField()
     payload=models.CharField(max_length=50, blank=True)
     text=models.TextField(blank=True)
-    attachment_urls=ArrayField(
-        models.URLField(blank=True),
-        size=8,
-        blank=True
-    )
+    attachment_url=models.URLField(blank=True)
     extra=models.TextField(blank=True)
 
     def create(self, validated_data):
