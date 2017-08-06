@@ -88,10 +88,10 @@ def webhook(request):
 
         psid=data['entry'][0]['messaging'][0]['sender']['id']
         sender = FBUser.objects.filter(psid=psid)
-        log.sender=sender
+        log.sender=sender[0]
 
         recipient = FBUser.objects.filter(psid=219247181443199)
-        log.recipient=recipient
+        log.recipient=recipient[0]
 
         log.mid=data['entry'][0]['messaging'][0]['message']['mid']
         log.timestamp_sent=data['entry'][0]['messaging'][0]['timestamp']
@@ -115,7 +115,7 @@ def webhook(request):
             log.message_type='received'
 
         log.payload=payload
-        log.save() 
+        log.save()
 
 
         if payload and payload != 'null':
