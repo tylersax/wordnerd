@@ -52,14 +52,3 @@ def get_definition(word):
     definitions = wordApi.getDefinitions(word)
     definition = definitions[0].text
     return definition
-
-def get_definition_deprecated(word):
-    mashape_key = 'iTTnvuGbZymshZqKjqM5mA4XmlLMp13gdUHjsnm0tGZL8JUziQ'
-    mashape_url = 'https://wordsapiv1.p.mashape.com/words/{word}'.format(word=word)
-    mashape_headers = {
-        "X-Mashape-Key": mashape_key,
-        "Accept": "application/json"
-    }
-    r = requests.get(mashape_url, headers=mashape_headers)
-    print r.json()
-    return r.json()['results'][0]['definition']
