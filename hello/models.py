@@ -130,8 +130,8 @@ class LoggedMessage(models.Model):
      )
 
     mid=models.CharField(primary_key=True, max_length=100)
-    sender=models.ManyToManyField(FBUser)
-    recipient=models.ManyToManyField(FBUser)
+    sender=models.ForeignKey(FBUser, related_name='sent_messages')
+    recipient=models.ForeignKey(FBUser, related_name='received_messages')
     timestamp_logged=models.DateTimeField(auto_now=False)
     timestamp_sent=models.DateTimeField()
     message_type=models.CharField(
