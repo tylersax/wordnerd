@@ -95,8 +95,13 @@ def webhook(request):
 
         log.mid=data['entry'][0]['messaging'][0]['message']['mid']
         log.timestamp_sent=data['entry'][0]['messaging'][0]['timestamp']
-        log.text=data['entry'][0]['messaging'][0]['message']['text']
-        log.attachment_url=data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']
+
+        if data['entry'][0]['messaging'][0]['message']['text']:
+            log.text=data['entry'][0]['messaging'][0]['message']['text']
+
+        if data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']:
+            log.attachment_url=data['entry'][0]['messaging'][0]['message']['attachments'][0]['payload']['url']
+            
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
 
