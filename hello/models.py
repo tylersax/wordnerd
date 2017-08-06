@@ -131,7 +131,7 @@ class LoggedMessage(models.Model):
     mid=models.CharField(primary_key=True, max_length=100)
     sender=models.ForeignKey(FBUser, related_name='sent_messages')
     recipient=models.ForeignKey(FBUser, related_name='received_messages')
-    timestamp_logged=models.DateTimeField(auto_now=False)
+    timestamp_logged=models.DateTimeField(auto_now=True)
     timestamp_sent=models.DateTimeField()
     message_type=models.CharField(
         max_length=20,
@@ -142,7 +142,7 @@ class LoggedMessage(models.Model):
     payload=models.CharField(max_length=50, blank=True)
     text=models.TextField(blank=True)
     attachment_urls=ArrayField(
-        models.URLField(),
+        models.URLField(blank=True),
         size=8,
         blank=True
     )
