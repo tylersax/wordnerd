@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from datetime import datetime
 from django.contrib.auth.models import User, Group
 import logging
