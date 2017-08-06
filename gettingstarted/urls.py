@@ -12,6 +12,7 @@ router.register(r'notes', views.NoteViewSet)
 router.register(r'fbposts', views.FbPostViewSet)
 router.register(r'wotd', views.WOTDViewSet)
 router.register(r'FBUser', views.FBUserViewSet)
+router.register(r'LoggedMessage', views.LoggedMessageViewSet)
 
 
 # Wire up our API using automatic URL routing.
