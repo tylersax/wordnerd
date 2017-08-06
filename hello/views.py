@@ -12,6 +12,7 @@ import logging
 from rest_framework.parsers import JSONParser
 import utils
 from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser, LoggedMessage
+import datetime
 
 class FBUserViewSet(viewsets.ModelViewSet):
 
@@ -96,7 +97,8 @@ def webhook(request):
         log.recipient=recipient[0]
 
         log.mid=message.get('mid')
-        log.timestamp_sent=data['entry'][0]['messaging'][0]['timestamp']
+        timestamp = data['entry'][0]['messaging'][0]['timestamp']
+        log.timestamp_sent=datetime.datetime.fromtimestamp(timestamp/1000)
 
         if 'text' in message:
             log.text=message.get('text')
