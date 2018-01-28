@@ -13,6 +13,7 @@ from rest_framework.parsers import JSONParser
 import utils
 from .models import Greeting, Note, FbPost, Conversation, WOTD, FBUser, LoggedMessage
 import datetime
+import time
 
 class FBUserViewSet(viewsets.ModelViewSet):
 
@@ -108,15 +109,20 @@ def webhook(request):
         recipient = FBUser.objects.filter(psid=219247181443199)
         log.recipient=recipient[0]
 
-        log.mid=message.get('mid')
+        if message:
+            log.mid=message.get('mid')
+            if 'text' in message:
+                log.text=message.get('text')
+
+            if 'attachments' in message:
+                log.attachment_url=message.get('attachments')[0]['payload']['url']
+
+        else:
+            log.mid='get_started_' + str(time.time())
+
         timestamp = data['entry'][0]['messaging'][0]['timestamp']
         log.timestamp_sent=datetime.datetime.fromtimestamp(timestamp/1000)
 
-        if 'text' in message:
-            log.text=message.get('text')
-
-        if 'attachments' in message:
-            log.attachment_url=message.get('attachments')[0]['payload']['url']
 
         # start by defining the response functionality here and in utils,
         # but this should really be pushed into a 'conversation' object
@@ -146,9 +152,9 @@ def webhook(request):
             if payload_function == 'define':
                 #this should be in a function
                 existing_wotd = WOTD.objects.filter(word=payload_param)
-                message = '\"{definition}\"'.format(definition=existing_wotd[0].definition)
+                response = '{definition}'.format(definition=existing_wotd[0].definition)
                 replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
-                utils.send_message_with_replies(psid, message, replies)
+                utils.send_message_with_replies(psid, response, replies)
 
             if payload_function == 'get_started':
                 greeting = """
