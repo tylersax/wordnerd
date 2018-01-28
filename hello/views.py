@@ -170,7 +170,7 @@ def webhook(request):
 
             if payload_function == 'subscribe':
                 if payload_param == 'yes':
-                    reply = 'That\'s what I wanted to hear :raised_hands:. You\'ll get your first word tomorrow. See you then!'
+                    reply = 'That\'s what I wanted to hear :raised_hands: You\'ll get your first word tomorrow. See you then!'
                     profile = utils.get_name_from_psid(psid)
                     existing_user = FBUser.objects.filter(psid=psid)
                     existing_user.subscribed = True
