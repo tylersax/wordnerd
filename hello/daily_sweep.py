@@ -21,7 +21,7 @@ if len(existing_wotd) > 1:
     wotd = existing_wotd[0]
 else:
     # note: there is a utils function to get definition from an API
-    # if you ever need that 
+    # if you ever need that
     definition = rss.entries[0]['summary']
     wotd = WOTD(
         word=wotd_string,
@@ -29,7 +29,7 @@ else:
     )
     wotd.save()
 
-users = FBUser.objects.all()
+users = FBUser.objects.filter(subscribed=True)
 for user in users:
     message = 'The word of the day is \"{wotd}.\"'.format(wotd=wotd.word)
     replies = {'Definition, please?':'define.{wotd}'.format(wotd=wotd.word)}
