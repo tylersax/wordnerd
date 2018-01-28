@@ -37,7 +37,7 @@ class FbPost(models.Model):
 class Topic(models.Model):
     # maybe this should actually be an interface, and any new
     # functionality inherits it;s structure
-    name=models.CharField(max_length=200)
+    name = models.CharField(max_length=200)
 
     # the text string used to trigger the topic
     message=models.TextField()
