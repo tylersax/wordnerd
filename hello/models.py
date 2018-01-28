@@ -115,6 +115,7 @@ class FBUser(models.Model):
     psid=models.CharField(max_length=200)
     first_name=models.CharField(max_length=200)
     last_name=models.CharField(max_length=200)
+    subscribed = models.BooleanField(default=False) 
 
     def create(self, validated_data):
         return FBUser.objects.create(**validated_data)

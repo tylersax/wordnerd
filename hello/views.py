@@ -160,6 +160,19 @@ def webhook(request):
 
                 utils.send_message_with_replies(psid, greeting, replies)
 
+            if payload_function == 'subscribe':
+                if payload_param == 'yes':
+                    reply = 'That\'s what I wanted to hear :raised_hands:. You\'ll get your first word tomorrow. See you then!'
+                    profile = utils.get_name_from_psid(psid)
+                    existing_user = FBUser.objects.filter(psid=psid)
+                    existing_user.subscribed = True
+
+                else:
+                    reply = 'It\'s cool - I get it. :no_good:'
+
+
+                utils.send_message(psid, reply)
+                
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
         #utils.send_message(user, message_text)
