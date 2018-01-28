@@ -94,6 +94,7 @@ def webhook(request):
         # Look up the sender. Create a new FBUser if none exists
         sender_query = FBUser.objects.filter(psid=psid)
         if sender_query.count()==0:
+            profile = utils.get_name_from_psid(psid)
             sender = FBUser(
                 psid=psid,
                 first_name = profile.get('first_name'),
