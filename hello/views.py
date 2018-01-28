@@ -103,7 +103,7 @@ def webhook(request):
             sender.save()
         else:
             sender = sender_query[0]
-        log.sender=sender[0]
+        log.sender=sender
 
         recipient = FBUser.objects.filter(psid=219247181443199)
         log.recipient=recipient[0]
