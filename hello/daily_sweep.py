@@ -12,15 +12,17 @@ import hello.utils as utils
 import feedparser
 from hello.models import WOTD, FBUser
 
-wotd_feed = 'http://www.dictionary.com/wordoftheday/wotd.rss'
+wotd_feed = 'https://wordsmith.org/awad/rss1.xml'
 rss = feedparser.parse(wotd_feed)
-wotd_string = rss.entries[0]['summary'].split(':', 1)[0]
+wotd_string = rss.entries[0]['title']
 
 existing_wotd = WOTD.objects.filter(word=wotd_string)
 if len(existing_wotd) > 1:
     wotd = existing_wotd[0]
 else:
-    definition = utils.get_definition(wotd_string)
+    # note: there is a utils function to get definition from an API
+    # if you ever need that 
+    definition = rss.entries[0]['summary']
     wotd = WOTD(
         word=wotd_string,
         definition=definition
