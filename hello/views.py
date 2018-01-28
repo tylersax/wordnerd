@@ -90,7 +90,18 @@ def webhook(request):
         message = data['entry'][0]['messaging'][0].get('message')
 
         psid=data['entry'][0]['messaging'][0]['sender']['id']
-        sender = FBUser.objects.filter(psid=psid)
+
+        # Look up the sender. Create a new FBUser if none exists
+        sender_query = FBUser.objects.filter(psid=psid)
+        if sender_query.count()==0:
+            sender = FBUser(
+                psid=psid,
+                first_name = profile.get('first_name'),
+                last_name = profile.get('last_name')
+            )
+            sender.save()
+        else:
+            sender = sender_query[0]
         log.sender=sender[0]
 
         recipient = FBUser.objects.filter(psid=219247181443199)
@@ -139,19 +150,9 @@ def webhook(request):
                 utils.send_message_with_replies(psid, message, replies)
 
             if payload_function == 'get_started':
-                profile = utils.get_name_from_psid(psid)
-                existing_user = FBUser.objects.filter(psid=psid)
-                if existing_user.count()==0:
-                    new_user = FBUser(
-                        psid=psid,
-                        first_name=profile.get('first_name'),
-                        last_name=profile.get('last_name')
-                    )
-                    new_user.save()
-
                 greeting = """
                 Hey there, {first_name}. Let\'s learn some words, shall we? If it\'s alright with you, I\'ll message you every morning with a new word of the day.
-                """.format(first_name=new_user.first_name)
+                """.format(first_name=sender.first_name)
 
                 replies = {
                     ':thumbs_up_sign: Let\'s do it!':'subscribe.yes',
@@ -172,7 +173,7 @@ def webhook(request):
 
 
                 utils.send_message(psid, reply)
-                
+
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
         #utils.send_message(user, message_text)
