@@ -8,7 +8,7 @@ def send_message(user, message):
     start_typing(user)
     access_token = 'EAACogSuZCOdYBAMQELrH7CpTvbKqx6ckRvJ6VeyiZA3bqCWCvaZAJ8H3wwWeVKTBSbhvkcnzAWZCZCpvpXSljqyzQrSKUJNuVjRsT4WtYMXZCFMyLSLUzNYJE6btdHxZAZB50w9YN81CjJKkwQEIbgTb6VUVNFoMuZCbaNRJaUQjrMmUPMrIZAwxUR'
     url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + access_token
-    message_text = emoji.emojize(message)
+    message_text = emoji.emojize(message, use_aliases=True)
     payload = {'recipient':{'id':user},'message':{'text':message_text}}
     r = requests.post(url, json=payload)
     return r.json()
@@ -17,7 +17,7 @@ def send_message_with_replies(user, message, replies):
     access_token = 'EAACogSuZCOdYBAMQELrH7CpTvbKqx6ckRvJ6VeyiZA3bqCWCvaZAJ8H3wwWeVKTBSbhvkcnzAWZCZCpvpXSljqyzQrSKUJNuVjRsT4WtYMXZCFMyLSLUzNYJE6btdHxZAZB50w9YN81CjJKkwQEIbgTb6VUVNFoMuZCbaNRJaUQjrMmUPMrIZAwxUR'
     url = 'https://graph.facebook.com/v2.6/me/messages?access_token=' + access_token
     replies_json = make_replies_json(replies)
-    message_text = emoji.emojize(message)
+    message_text = emoji.emojize(message, use_aliases=True)
     payload = {'recipient':{'id':user},'message':{'text':message_text,'quick_replies':replies_json}}
     r = requests.post(url, json=payload)
     return r.json()
