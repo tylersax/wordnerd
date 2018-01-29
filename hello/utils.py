@@ -50,5 +50,7 @@ def get_definition(word):
     client = swagger.ApiClient(key, url)
     wordApi = WordApi.WordApi(client)
     definitions = wordApi.getDefinitions(word)
-    definition = definitions[0].text
-    return definition
+    if definitions:
+        return definitions[0].text
+    else:
+        return ''
