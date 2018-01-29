@@ -108,15 +108,15 @@ def webhook(request):
 
         recipient = FBUser.objects.filter(psid=219247181443199)
         log.recipient=recipient[0]
+        message_text = ''
 
         if message:
             log.mid=message.get('mid')
             if 'text' in message:
-                log.text=message.get('text')
-
+                log.text = message.get('text')
+                message_text = message.get('text')
             if 'attachments' in message:
                 log.attachment_url=message.get('attachments')[0]['payload']['url']
-
         else:
             log.mid='get_started_' + str(time.time())
 
@@ -177,8 +177,14 @@ def webhook(request):
                 else:
                     reply = 'It\'s cool - I get it. :no_good:'
 
-
                 utils.send_message(psid, reply)
+
+
+        if message_text.split(' ', 1)[0].lower() == 'define':
+             lookup = utils.get_definition(message_text.split(' ', 1)[1].lower())
+             definition = utils.get_definition(lookup)
+             replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
+             utils.send_message_with_replies(psid, definition, replies)
 
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
