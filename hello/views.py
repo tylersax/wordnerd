@@ -181,7 +181,7 @@ def webhook(request):
 
 
         if message_text.split(' ', 1)[0].lower() == 'define':
-             lookup = utils.get_definition(message_text.split(' ', 1)[1].lower())
+             lookup = message_text.split(' ', 1)[1].lower()
              definition = utils.get_definition(lookup)
              replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
              utils.send_message_with_replies(psid, definition, replies)
