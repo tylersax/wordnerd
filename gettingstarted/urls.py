@@ -2,6 +2,8 @@ from django.conf.urls import url, include
 from rest_framework import routers
 from hello import views
 
+from django.views.generic.base import TemplateView
+
 from django.contrib import admin
 admin.autodiscover()
 
@@ -26,6 +28,7 @@ urlpatterns = [
     url(r'^test/$', views.returnString, name='return_string'),
     url(r'^webhook/$', views.webhook, name='webhook'),
     url(r'^entry', views.entry, name='entry'),
+    url(r'^privacy', views.privacypolicy, name='privacypolicy'),
 ]
 
 
