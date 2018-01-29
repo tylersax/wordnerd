@@ -181,11 +181,13 @@ def webhook(request):
 
 
         if message_text.split(' ', 1)[0].lower() == 'define':
-             lookup = message_text.split(' ', 1)[1].lower()
-             definition = utils.get_definition(lookup)
-             replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
-             utils.send_message_with_replies(psid, definition, replies)
-
+            lookup = message_text.split(' ', 1)[1].lower()
+            definition = utils.get_definition(lookup)
+            if definition:
+                replies = {':thumbs_up_sign:':'reply.yes',':thumbs_down_sign:':'reply.no'}
+                utils.send_message_with_replies(psid, definition, replies)
+            else:
+                utils.send_message(psid, 'Sorry, I don\'t know that word.')
         # convo = Conversation.create(message_text, user )
         # response = convo.parseMessage(message_text)
         #utils.send_message(user, message_text)
